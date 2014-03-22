@@ -1,0 +1,17 @@
+/Debug
+/File.out
+/CPackConfig.cmake
+/CPackSourceConfig.cmake
+/CTestTestfile.cmake
+/Makefile
+/cmake_install.cmake
+/CMakeCache.txt
+/Testing
+/Build
+/CMakeFiles
+/_CPack_Packages
+/install_manifest.txt
+/liblog++-1.0.0-i686.deb
+/.cproject
+/.project
+/liblog++-1.1.0-x86_64.deb
