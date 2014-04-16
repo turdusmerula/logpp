@@ -27,7 +27,7 @@ Using log++
 The most simple case
 ====
 
-log++ comes preconfigured to log on stdout and stderr depending with five predefined messages level:
+log++ comes preconfigured to log on stdout and stderr with five predefined messages level:
 
 | criticity     | level         | output
 | ------------- | ------------- | -------------
@@ -56,7 +56,7 @@ It will produce the following output on the console:
 
 Appending a new logger
 ====
-Appending a new logger is made simply, look at the following sample tah adds a file logger to a multi stream:
+Appending a new logger is made simply, look at the following sample that adds a file logger to a multi stream:
 
 
     #include <log/log++.>
