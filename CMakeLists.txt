@@ -10,7 +10,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 
-find_package(Boost 1.53 COMPONENTS filesystem regex system REQUIRED)
+find_package(Boost 1.49 COMPONENTS filesystem regex system REQUIRED)
 
 include_directories(
 	${Boost_INCLUDE_DIR}
@@ -22,11 +22,7 @@ LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 FILE(GLOB sources src/log++/*.cpp)
 FILE(GLOB headers src/log++/*.h)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-	add_library(${PROJECT_NAME} ${sources})
-else ()
-	add_library(${PROJECT_NAME} SHARED ${sources})
-endif()
+add_library(${PROJECT_NAME} SHARED ${sources})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
 
@@ -42,6 +38,7 @@ install (TARGETS ${PROJECT_NAME}
   DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 install (FILES ${headers} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/log++)
 
-add_subdirectory(tests)
+include(CTest) 
+add_subdirectory(tu)
 
-enable_testing()
+

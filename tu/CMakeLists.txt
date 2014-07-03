@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(log++-test)
+project(log++-unit-test)
 
 set(CMAKE_BUILD_DIRECTORY Build/)
 set(EXECUTABLE_OUTPUT_PATH Build/bin)
@@ -14,5 +14,3 @@ FILE(GLOB sources src/*.cpp)
 add_executable(${PROJECT_NAME} ${sources})
 target_link_libraries(${PROJECT_NAME} cppunit log++)
 
-enable_testing()
-add_test(tests Build/bin/${PROJECT_NAME})
