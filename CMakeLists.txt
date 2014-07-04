@@ -39,6 +39,6 @@ install (TARGETS ${PROJECT_NAME}
 install (FILES ${headers} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/log++)
 
 include(CTest) 
-add_subdirectory(tu)
+add_subdirectory(tests/ut)
 
 

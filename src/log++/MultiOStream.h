@@ -50,9 +50,11 @@ private:
 template<typename T>
 MultiOStream &MultiOStream::operator<<(const T &v)
 {
-
-	for(auto& stream : streams)
-		(*stream) << v ;
+	if(active==true)
+	{
+		for(auto& stream : streams)
+			(*stream) << v ;
+	}
 	return *this ;
 }
 

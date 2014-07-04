@@ -70,6 +70,7 @@ MultiOStream& operator<<(MultiOStream& stream, _SetFile f)
 
 		}
 	}
+
 	return stream ;
 
 }
