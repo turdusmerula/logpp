@@ -15,12 +15,26 @@ find_package(Boost 1.49 COMPONENTS filesystem regex system REQUIRED)
 include_directories(
 	${Boost_INCLUDE_DIR}
 	src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../cots/mongo-cxx-driver/build/install/include
 )
 
-LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+LINK_DIRECTORIES(
+    ${Boost_LIBRARY_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../cots/mongo-cxx-driver/build/install/lib
+)
 
-FILE(GLOB sources src/log++/*.cpp)
-FILE(GLOB headers src/log++/*.h)
+FILE(GLOB sources 
+	src/log++/*.cpp
+	src/log++/buffer/*.cpp
+	src/log++/prefix/*.cpp
+	src/log++/stream/*.cpp
+)
+FILE(GLOB headers 
+	src/log++/*.h
+	src/log++/buffer/*.h
+	src/log++/prefix/*.h
+	src/log++/stream/*.h
+)
 
 add_library(${PROJECT_NAME} SHARED ${sources})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})

@@ -1,4 +1,4 @@
-#include <log++/MultiOStream.h>
+#include <log++/stream/MultiOStream.h>
 
 class MultiOStreamTest : public CppUnit::TestFixture
 {

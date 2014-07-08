@@ -23,7 +23,7 @@ public:
 	void testChangeDebugPrefix()
 	{
     	for(auto& stream : std::debug.getStreams())
-    		stream->getPrefix()->setFormat("-- new prefix -- ") ;
+    		dynamic_cast<std::PrefixString*>(stream->getPrefix())->setFormat("-- new prefix -- ") ;
 		std::debug << "Debug message" << std::endl ;
 	}
 

@@ -98,9 +98,12 @@ PrefixString* OPrefixFileStream::getPrefix() const
 
 OPrefixFileStream& operator<<(OPrefixFileStream& stream, _SetFile f)
 {
-	stream.getPrefix()->setFile(f.file) ;
-	stream.getPrefix()->setLine(f.line) ;
-	stream.getPrefix()->setCol(f.col) ;
+	if(stream.getPrefix()!=nullptr)
+	{
+		stream.getPrefix()->setFile(f.file) ;
+		stream.getPrefix()->setLine(f.line) ;
+		stream.getPrefix()->setCol(f.col) ;
+	}
 	return stream ;
 
 }

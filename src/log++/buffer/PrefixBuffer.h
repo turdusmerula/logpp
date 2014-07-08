@@ -26,7 +26,7 @@ MA 02110-1301, USA.
 #include <string>
 #include <memory>
 
-#include <log++/PrefixString.h>
+#include <log++/prefix/PrefixString.h>
 
 namespace std {
 

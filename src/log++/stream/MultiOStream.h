@@ -21,7 +21,7 @@ MA 02110-1301, USA.
 #include <vector>
 #include <memory>
 
-#include <log++/OStream.h>
+#include <log++/stream/OStream.h>
 
 namespace std {
 

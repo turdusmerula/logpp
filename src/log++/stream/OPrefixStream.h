@@ -15,33 +15,38 @@ Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
 MA 02110-1301, USA.
 */
 
-#ifndef LOG_OSTREAM_H_
-#define LOG_OSTREAM_H_
+#ifndef _OPRFXSTREAM_H_
+#define _OPRFXSTREAM_H_
 
-#include <ostream>
-#include <log++/IOManip.h>
-#include <log++/PrefixString.h>
+#include <memory>
+
+#include <log++/stream/OStream.h>
+#include <log++/prefix/PrefixString.h>
 
 namespace std {
 
-class OStream : public std::ostream
+class PrefixBuffer ;
+
+
+class OPrefixStream : public std::OStream
 {
 public:
-	OStream() ;
-	OStream(std::streambuf *sb) ;
+	OPrefixStream(std::streambuf *sb) ;
+	OPrefixStream(std::streambuf *sb, std::shared_ptr<PrefixString> prfx) ;
 
-	~OStream() ;
+	~OPrefixStream();
 
-	virtual void setActive(bool value)=0 ;
-	virtual bool getActive() const=0 ;
+	virtual void setActive(bool value) ;
+	virtual bool getActive() const ;
 
-	virtual PrefixString* getPrefix() const=0 ;
+	virtual PrefixString* getPrefix() const ;
 
 protected:
+	PrefixBuffer *buff ;
 } ;
 
-extern OStream& operator<<(OStream&, _SetFile) ;
-extern basic_ostream<char>& operator<<(basic_ostream<char>&, _SetFile) ;
+extern OPrefixStream& operator<<(OPrefixStream&, _SetFile) ;
+
 
 } //End namespace
-#endif /* LOG_OSTREAM_H_ */
+#endif /* _OPRFXSTREAM_H_ */

@@ -15,34 +15,34 @@ Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
 MA 02110-1301, USA.
 */
 
-#include "OStream.h"
+#ifndef LOG_OSTREAM_H_
+#define LOG_OSTREAM_H_
+
+#include <ostream>
+#include <log++/IOManip.h>
+#include <log++/prefix/Prefix.h>
 
 namespace std {
 
-OStream::OStream()
-	:	std::ostream()
+class OStream : public std::ostream
 {
-}
+public:
+	OStream() ;
+	OStream(std::streambuf *sb) ;
 
-OStream::OStream(std::streambuf *sb)
-	:	std::ostream(sb)
-{
-}
+	virtual ~OStream()=0 ;
 
+	virtual void setActive(bool value) { active = value ; }
+	virtual bool getActive() const { return active ; }
 
-OStream::~OStream()
-{
-}
+	virtual Prefix* getPrefix() const { return nullptr ; }
 
-OStream& operator<<(OStream& stream, _SetFile f)
-{
-	return stream ;
-}
+protected:
+	bool active ;
+} ;
 
-basic_ostream<char>& operator<<(basic_ostream<char>& stream, _SetFile f)
-{
-	return stream ;
-}
-
+extern OStream& operator<<(OStream&, _SetFile) ;
+extern basic_ostream<char>& operator<<(basic_ostream<char>&, _SetFile) ;
 
 } //End namespace
+#endif /* LOG_OSTREAM_H_ */

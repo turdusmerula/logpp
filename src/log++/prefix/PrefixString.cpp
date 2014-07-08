@@ -15,7 +15,8 @@ Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
 MA 02110-1301, USA.
 */
 
-#include "PrefixString.h"
+#include <log++/prefix/PrefixString.h>
+#include <log++/util.h>
 
 #include <boost/lexical_cast.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -25,18 +26,10 @@ MA 02110-1301, USA.
 
 namespace std {
 
-std::vector<std::string> PrefixString::CriticityString={"UNKNOWN", "DEBUG", "INFO", "WARNING", "ERROR", "FATAL"} ;
-std::map<pthread_t, int> PrefixString::threads ;
-std::mutex PrefixString::threads_mutex ;
-
 PrefixString::PrefixString()
+	: Prefix()
 {
-	criticity = INFO ;
-	level = 2 ;
-
-	setFormat("%loc%[%criticity%] #%thread% [%yyyy%/%MM%/%dd% %HH%:%mm%:%ss%] ") ;
-	line = -1 ;
-	col = -1 ;
+	setFormat("%loc%[%criticity%] %component% #%thread% [%yyyy%/%MM%/%dd% %HH%:%mm%:%ss%] ") ;
 }
 
 PrefixString::PrefixString(const std::string format)
@@ -83,6 +76,8 @@ bool PrefixString::addFormatField(const std::string &fieldname)
 
 	if(fieldname=="criticity")
 		field.field = CRITICITY ;
+	else if(fieldname=="component")
+		field.field = COMPONENT ;
 	else if(fieldname=="level")
 		field.field = LEVEL ;
 	else if(fieldname=="thread")
@@ -212,36 +207,14 @@ void PrefixString::setFormat(const std::string &format)
 	this->format = format ;
 }
 
-int PrefixString::getThreadId()
-{
-	static int id=1 ;
-	int ret ;
-	threads_mutex.lock() ;
-	auto ith=threads.find(pthread_self()) ;
-	if(ith==threads.end())
-	{
-		//TODO protect here with mutex
-		threads[pthread_self()] = id ;
-		threads_mutex.unlock() ;
-		ret = id ;
-		id++ ;
-	}
-	else
-	{
-		threads_mutex.unlock() ;
-		return (*ith).second ;
-	}
-	return ret ;
-}
-
 
 void PrefixString::refresh()
 {
-	std::ostringstream date ;
-    auto now = std::chrono::system_clock::now() ;
-    std::time_t now_c = std::chrono::system_clock::to_time_t(now);
-    struct tm *parts = std::localtime(&now_c);
+	std::Prefix::refresh() ;
 
+	std::ostringstream date ;
+    std::time_t now_c = std::ptime2time_t(msgtime);
+    struct tm *parts = std::localtime(&now_c);
 
     std::ostringstream s ;
 
@@ -256,6 +229,9 @@ void PrefixString::refresh()
     		break ;
     	case CRITICITY:
     		s << getCriticityString() ;
+    		break ;
+    	case COMPONENT:
+    		s << getComponent() ;
     		break ;
     	case LEVEL:
     		s << getLevel() ;

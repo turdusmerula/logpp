@@ -15,49 +15,45 @@ Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
 MA 02110-1301, USA.
 */
 
-#include "OPrefixStream.h"
-#include "PrefixBuffer.h"
+#include <log++/prefix/PrefixMongoDb.h>
 
 namespace std {
 
-
-OPrefixStream::OPrefixStream(std::streambuf *sb)
-	:	std::OStream(buff=new PrefixBuffer(sb))
+PrefixMongoDb::PrefixMongoDb()
+	: Prefix()
 {
 }
 
-OPrefixStream::OPrefixStream(std::streambuf *sb, std::shared_ptr<PrefixString> prfx)
-	:	std::OStream(buff=new PrefixBuffer(sb, prfx))
+PrefixMongoDb::PrefixMongoDb(Criticity criticity)
+	: Prefix(criticity)
 {
 }
 
-OPrefixStream::~OPrefixStream()
+PrefixMongoDb::PrefixMongoDb(int level)
+	: Prefix(level)
 {
 }
 
-void OPrefixStream::setActive(bool value)
+PrefixMongoDb::~PrefixMongoDb()
 {
-	buff->active = value ;
-}
-
-bool OPrefixStream::getActive() const
-{
-	return buff->active ;
-}
-
-PrefixString* OPrefixStream::getPrefix() const
-{
-	return buff->prefix.get() ;
-}
-
-OPrefixStream& operator<<(OPrefixStream& stream, _SetFile f)
-{
-	stream.getPrefix()->setFile(f.file) ;
-	stream.getPrefix()->setLine(f.line) ;
-	stream.getPrefix()->setCol(f.col) ;
-	return stream ;
 
 }
 
 
-} //End namespace
+void PrefixMongoDb::refresh()
+{
+	Prefix::refresh() ;
+}
+
+void PrefixMongoDb::getBson(mongo::BSONObjBuilder& b) const
+{
+	b.append("criticity", getLevel()) ;
+	b.append("component", getComponent()) ;
+	b.append("line", getLine()) ;
+	b.append("col", getCol()) ;
+	b.append("file", getFile()) ;
+	b.append("thread", getThreadId()) ;
+	b.append("date", ptime2date_t(getTime())) ;
+}
+
+}

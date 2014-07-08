@@ -15,11 +15,11 @@ Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
 MA 02110-1301, USA.
 */
 
-#ifndef _PRFXFILESTREAM_H_
-#define _PRFXFILESTREAM_H_
+#ifndef _OPREFIXFILESTREAM_H_
+#define _OPREFIXFILESTREAM_H_
 
-#include <log++/OStream.h>
-#include <log++/PrefixFileBuffer.h>
+#include <log++/stream/OStream.h>
+#include <log++/buffer/PrefixFileBuffer.h>
 
 namespace std {
 

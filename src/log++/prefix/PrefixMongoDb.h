@@ -15,37 +15,28 @@ Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
 MA 02110-1301, USA.
 */
 
-#ifndef _OPRFXSTREAM_H_
-#define _OPRFXSTREAM_H_
+#ifndef _PREFIXMONGODB_H_
+#define _PREFIXMONGODB_H_
 
-#include <memory>
-
-#include <log++/OStream.h>
+#include <log++/prefix/Prefix.h>
+#include <mongo/bson/bson.h>
 
 namespace std {
 
-class PrefixBuffer ;
-
-
-class OPrefixStream : public std::OStream
+class PrefixMongoDb : public Prefix
 {
 public:
-	OPrefixStream(std::streambuf *sb) ;
-	OPrefixStream(std::streambuf *sb, std::shared_ptr<PrefixString> prfx) ;
+	PrefixMongoDb() ;
+	PrefixMongoDb(Criticity criticity) ;
+	PrefixMongoDb(int level) ;
+	virtual ~PrefixMongoDb() ;
 
-	~OPrefixStream();
+	virtual void refresh() ;
 
-	virtual void setActive(bool value) ;
-	virtual bool getActive() const ;
-
-	virtual PrefixString* getPrefix() const ;
-
+	void getBson(mongo::BSONObjBuilder& b) const ;
 protected:
-	PrefixBuffer *buff ;
 } ;
 
-extern OPrefixStream& operator<<(OPrefixStream&, _SetFile) ;
+}
 
-
-} //End namespace
-#endif /* _OPRFXSTREAM_H_ */
+#endif

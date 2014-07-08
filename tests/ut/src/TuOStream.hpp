@@ -1,4 +1,4 @@
-#include <log++/OPrefixStream.h>
+#include <log++/stream/OPrefixStream.h>
 
 class AddOStreamTest : public CppUnit::TestFixture
 {

@@ -16,14 +16,37 @@
 
 #include <log++/log++.h>
 
+#include <cstdlib>
+#include <iostream>
+#include <mongo/client/dbclient.h>
+
+std::shared_ptr<mongo::DBClientConnection> mgconn ;
+
 #include <TuOStream.hpp>
 #include <TuOFileStream.hpp>
 #include <TuMultiOStream.hpp>
+#include <TuMongoDbStream.hpp>
 #include <Tulogpp.hpp>
 
 int main(int argc, char* argv[])
 {
-    // informs test-listener about testresults
+	//Connect to test database
+	try {
+		mgconn = std::shared_ptr<mongo::DBClientConnection>(new mongo::DBClientConnection) ;
+		mgconn->connect("localhost");
+	} catch( const mongo::DBException &e ) {
+		std::cerr << e.what() << std::endl ;
+		return 1 ;
+	}
+	if(mgconn==nullptr)
+	{
+		std::cerr << "Error connecting mongoDb" << std::endl ;
+		return 1 ;
+	}
+
+	std::cout << "Is failed " << mgconn->isFailed() << std::endl ;
+
+	// informs test-listener about testresults
     CPPUNIT_NS::TestResult testresult ;
 
     // register listener for collecting the test-results

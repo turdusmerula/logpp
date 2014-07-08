@@ -1,5 +1,5 @@
 
-#include <log++/OPrefixFileStream.h>
+#include <log++/stream/OPrefixFileStream.h>
 
 class AddOFilesStreamTest : public CppUnit::TestFixture
 {

@@ -15,26 +15,36 @@ Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
 MA 02110-1301, USA.
 */
 
-#ifndef _LOGPP_H_
-#define _LOGPP_H_
-
-#include <log++/stream/OPrefixStream.h>
-#include <log++/stream/OPrefixFileStream.h>
-#include <log++/stream/OMongoDbStream.h>
-#include <log++/stream/MultiOStream.h>
-#include <log++/IOManip.h>
-
-#define currpos std::setfile(__FILE__, __LINE__)
+#include "OStream.h"
 
 namespace std {
 
-//extern thread_local std::OPrefixStream debug ;
-extern thread_local std::MultiOStream debug ;
-extern thread_local std::MultiOStream info ;
-extern thread_local std::MultiOStream warn ;
-extern thread_local std::MultiOStream error ;
-extern thread_local std::MultiOStream fatal ;
-
+OStream::OStream()
+	:	std::ostream()
+{
+	active =true ;
 }
 
-#endif // _LOGPP_H_
+OStream::OStream(std::streambuf *sb)
+	:	std::ostream(sb)
+{
+	active = true ;
+}
+
+
+OStream::~OStream()
+{
+}
+
+OStream& operator<<(OStream& stream, _SetFile f)
+{
+	return stream ;
+}
+
+basic_ostream<char>& operator<<(basic_ostream<char>& stream, _SetFile f)
+{
+	return stream ;
+}
+
+
+} //End namespace
