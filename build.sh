@@ -40,7 +40,7 @@ function usage()
 	echo "help: output command help and quit" 
 	exit 0
 }
-possible_args=" clean depclean build run-tests run-tu run-perfo run-it cdash eclipse upgrade-tools -release -clang -ThreadSanitizer -AddressSanitizer -ThreadSanitizer -DataFlowSanitizer -gcov -valgrind -callgrind -ftrace -verbose -ddd help"
+possible_args="clean depclean build run-tests run-tu run-perfo run-it cdash eclipse upgrade-tools -release -clang -ThreadSanitizer -AddressSanitizer -ThreadSanitizer -DataFlowSanitizer -gcov -valgrind -callgrind -ftrace -verbose -ddd help"
 
 #Options
 release=0 
@@ -77,7 +77,7 @@ post_command=""
 #test command line arguments
 for arg in "$@"
 do
-	if [[ ! $possible_args =~ " $arg " ]]
+	if [[ ! $possible_args =~ $arg ]]
 	then
 		usage
 		exit 1 
@@ -173,7 +173,7 @@ do
 	elif [[ "_$arg" == "_-ddd" ]]
 	then
 		ddd=1
-	elif [[ "_$arg" == "_help" ]]
+		elif [[ "_$arg" == "_help" ]]
 	then
 		usage
 		exit 0
@@ -225,7 +225,9 @@ function depclean()
 	find . -type f -name install_manifest.txt -exec rm -f {} \;
 	find . -type f -name Makefile -exec rm -f {} \;
 	find . -type f -name CMakeCache.txt -exec rm -f {} \;
-	find . -type f \( -name "*.cmake" ! -name "CTestConfig.cmake" \) -exec rm -f {} \;
+	find . -type f -name "cmake_install.cmake" -exec rm -f {} \;
+	find . -type f -name "CTestConfig.cmake" -exec rm -f {} \;
+	find . -type f -name "CTestTestfile.cmake" -exec rm -f {} \;
 	find . -type f -name "*.db" -exec rm -f {} \;
 	find . -type f -name "*.defs" -exec rm -f {} \;
 	find . -type f -name "DartConfiguration.tcl" -exec rm -f {} \;
@@ -241,11 +243,11 @@ function performance_tests()
 	find . -type f -name "*-perfo-test" > /tmp/.tests 
 
 	exec 3</tmp/.tests 
-	while read -u3 test    
+	while read -u3 command    
 	do    
-	    echo "Run performance test $test"    
-		cd $(dirname $test)
-		$command ./$(basename $test)
+	    echo "Run performance test $command"    
+		cd $(dirname $command)
+		./$(basename $command)
 		cd -
 	done
 	
@@ -258,11 +260,11 @@ function unit_tests()
 	find . -type f -name "*-unit-test" > /tmp/.tests 
 	
 	exec 3</tmp/.tests 
-	while read -u3 test    
+	while read -u3 command    
 	do
-	    echo "Run unit test $test"    
-		cd $(dirname $test)
-		$command ./$(basename $test)
+	    echo "Run unit test $command"    
+		cd $(dirname $command)
+		./$(basename $command)
 		cd -
 	done
 	
@@ -275,11 +277,11 @@ function integration_tests()
 	find . -type f -name "*-integration-test" > /tmp/.tests 
 	
 	exec 3</tmp/.tests 
-	while read -u3 test    
+	while read -u3 command    
 	do    
-	    echo "Run integration test $test"    
-		cd $(dirname $test)
-		$command ./$(basename $test)
+	    echo "Run integration test $command"    
+		cd $(dirname $command)
+		./$(basename $command)
 		cd -
 	done
 	

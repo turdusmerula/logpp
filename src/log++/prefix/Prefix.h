@@ -29,7 +29,7 @@ namespace std {
 class Prefix
 {
 public:
-	enum Criticity { UNKNOWN=0, DEBUG, INFO, WARNING, ERROR, FATAL } ;
+	typedef enum { UNKNOWN=0, DEBUG, INFO, WARNING, ERROR, FATAL } Criticity ;
 
 public:
 	Prefix() ;
