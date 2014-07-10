@@ -24,6 +24,35 @@ The installer is only provided for debian systems but may work on other systems:
 Using log++
 =====
 
+Dependencies
+====
+Log++ uses boost and mongodb and will need the following libraries:
+ - mongoclient
+ - pthread
+ - crypto
+ - ssl
+ - boost_filesystem 
+ - boost_regex 
+ - boost_system 
+ - boost_thread 
+
+Boost minimum version required is 1.49 
+
+Linking log++ on cmake
+====
+Simply add the following line in CMakeLists.txt:
+  find_package(log++ REQUIRED HINTS "${CMAKE_INSTALL_PREFIX}/lib/log++")
+
+The following variables are defined by find script:
+  LIBLOGPP_FOUND             - True if liblog++ is found.
+  LIBLOGPP_INCLUDE_DIRS      - Directory where liblog++ headers are located.
+  LIBLOGPP_LIBRARIES         - log++ libraries to link against.
+  LIBLOGPP_VERSION_MAJOR     - The major version of log++
+  LIBLOGPP_VERSION_MINOR     - The minor version of log++
+  LIBLOGPP_VERSION_PATCH     - The patch version of log++
+  LIBLOGPP_VERSION_STRING    - version number as a string (ex: "2.0.0")
+
+
 The most simple case
 ====
 

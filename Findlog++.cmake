@@ -52,7 +52,7 @@ FIND_PACKAGE_HANDLE_STANDARD_ARGS(LibLOGPP  REQUIRED_VARS  LIBLOGPP_INCLUDE_DIR
 
 if (LIBLOGPP_FOUND)
     
-    find_package(Boost 1.49 COMPONENTS filesystem regex system thread program_options REQUIRED)
+    find_package(Boost 1.49 COMPONENTS filesystem regex system thread REQUIRED)
 
     set(LIBLOGPP_LIBRARIES 
         ${LIBLOGPP_MONGOCLIENT}
@@ -60,6 +60,7 @@ if (LIBLOGPP_FOUND)
         ${LIBLOGPP_CRYPTO} 
         ${LIBLOGPP_SSL}
         ${LIBLOGPP_LIBRARY}
+        ${Boost_LIBRARIES}
     )
     set(LIBLOGPP_INCLUDE_DIRS ${LIBLOGPP_INCLUDE_DIR})
 endif ()
