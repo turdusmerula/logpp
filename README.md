@@ -1,11 +1,12 @@
 log++
 ======
 
-log++ is a library for fast and simple logging purpose. When I created it I wasn't aware of the existence of Boost.log so it's pretty similar but not compatible. 
+log++ is a library for fast and simple logging purpose, it is able to log into console, file or mongodb database. 
 
 Log++ is able to log inside simultaneous streams at the same time and automatically prepend informations to the data logged.
 
-Note: Once you do not need the special abilities  of log++ such as adding file name to the logged data I strongly recommend you to use the Boost.log data logger that may be more stable. 
+Note: When I created this library I wasn't aware of the existence of Boost.log so it's pretty similar but not compatible. 
+Note: Once you do not need the special abilities of log++ such as adding file name to the logged data or logging to mongodb I strongly recommend you to use the Boost.log data logger that may be more stable. 
 
 Building log++
 =====
@@ -27,30 +28,34 @@ Using log++
 Dependencies
 ====
 Log++ uses boost and mongodb and will need the following libraries:
- - mongoclient
- - pthread
- - crypto
- - ssl
- - boost_filesystem 
- - boost_regex 
- - boost_system 
- - boost_thread 
+ *  mongoclient
+ *  pthread
+ *  crypto
+ *  ssl
+ *  boost_filesystem 
+ *  boost_regex 
+ *  boost_system 
+ *  boost_thread 
 
 Boost minimum version required is 1.49 
 
 Linking log++ on cmake
 ====
 Simply add the following line in CMakeLists.txt:
+
   find_package(log++ REQUIRED HINTS "${CMAKE_INSTALL_PREFIX}/lib/log++")
 
 The following variables are defined by find script:
-  LIBLOGPP_FOUND             - True if liblog++ is found.
-  LIBLOGPP_INCLUDE_DIRS      - Directory where liblog++ headers are located.
-  LIBLOGPP_LIBRARIES         - log++ libraries to link against.
-  LIBLOGPP_VERSION_MAJOR     - The major version of log++
-  LIBLOGPP_VERSION_MINOR     - The minor version of log++
-  LIBLOGPP_VERSION_PATCH     - The patch version of log++
-  LIBLOGPP_VERSION_STRING    - version number as a string (ex: "2.0.0")
+
+| variable                | description
+| ----------------------- | ---------------------------------------------
+| LIBLOGPP_FOUND          | True if liblog++ is found.
+| LIBLOGPP_INCLUDE_DIRS   | Directory where liblog++ headers are located.
+| LIBLOGPP_LIBRARIES      | log++ libraries to link against.
+| LIBLOGPP_VERSION_MAJOR  | The major version of log++
+| LIBLOGPP_VERSION_MINOR  | The minor version of log++
+| LIBLOGPP_VERSION_PATCH  | The patch version of log++
+| LIBLOGPP_VERSION_STRING | version number as a string (ex: "2.0.0")
 
 
 The most simple case
@@ -127,19 +132,20 @@ If not changed new streams are given the following default prefix value:
 
 Predefined variables should be surounded by %, a double %% gives a % in the prefix. The possible variables names are the following:
 
-| Variable | Values |
-| ------------- | ------------- |
-| criticity | DEBUG, INFO, WARNING, ERROR, FATAL |
-| level | Same as criticity but numbers, 1(DEBUG) to 5(FATAL), or more for custom |
-| thread | Thread creation number |
-| threadid | System thread identifier |
-| yy or yyyy | Year |
-| M or MM | Month number |
-| d or dd | Day number |
-| H or HH | Hour |
-| m or mm | Month |
-| s or ss | Seconds |  
-| loc | Prints message location file:line:col |
+| Variable      | Values 
+| ------------- | ------------------------------------------------------------------------ 
+| criticity     | DEBUG, INFO, WARNING, ERROR, FATAL 
+| component     | Component name, empty by default
+| level         | Same as criticity but numbers, 1(DEBUG) to 5(FATAL), or more for custom 
+| thread        | Thread creation number 
+| threadid      | System thread identifier 
+| yy or yyyy    | Year 
+| M or MM       | Month number 
+| d or dd       | Day number 
+| H or HH       | Hour 
+| m or mm       | Month 
+| s or ss       | Seconds   
+| loc           | Prints message location file:line:col 
 
 Note: 
  * 		if file is blank then loc is ignored
