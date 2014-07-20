@@ -1,0 +1,76 @@
+export LD_LIBRARY_PATH=libhello/Build/lib
+
+get_version()
+{
+    major=$(grep "#define LOGPP_VERSION_MAJOR" src/version.h | sed "s/.*\([0-9]\)*/\1/g")
+    minor=$(grep "#define LOGPP_VERSION_MINOR" src/version.h | sed "s/.*\([0-9]\)*/\1/g")
+    patch=$(grep "#define LOGPP_VERSION_PATCH" src/version.h | sed "s/.*\([0-9]\)*/\1/g")
+    
+    export version="${major}.${minor}.${patch}" 
+}
+
+#Perform here custom clean steps
+function custom_clean()
+{
+    echo -n
+}
+
+#Perform here custom clean steps for repository
+function custom_depclean()
+{
+    echo -n
+}
+
+#Run custom performance tests
+function custom_performance_tests()
+{
+    echo -n
+}
+
+#Run custom unit tests
+function custom_unit_tests()
+{
+    echo -n
+}
+
+#Run custom integration tests
+function custom_integration_tests()
+{
+    echo -n
+}
+
+#Create source/developer/release packages
+function custom_package()
+{
+    mkdir -p Build/package
+    
+    find src -name "*.h" > Build/.includes
+    exec 3</tmp/.tests
+    while read -u3 file    
+    do
+        echo "Add $file"    
+        mkdir -p Build/package/include/$(dirname $file)
+        cp $file Build/package/include/$(dirname $file)
+    done
+    
+    mkdir -p Build/package/lib
+    cp Build/lib/liblog++.so Build/package/lib
+    
+    
+    rm -f *.deb
+    make package
+}
+
+#Install packages
+function custom_install()
+{
+    sudo dpkg -r liblog++
+    sudo dpkg -i liblog++*.deb
+}
+
+#Tag version and create a new release
+function custom_deploy()
+{
+    echo -n
+}
+
