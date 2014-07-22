@@ -69,9 +69,7 @@ install (TARGETS ${PROJECT_NAME}
   DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 INSTALL_HEADERS_WITH_DIRECTORY(headers)
 
-install (FILES Findlog++.cmake 
-  DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/log++/cmake)
-install (PROGRAMS CPackConfig.cmake 
+install (PROGRAMS Findlog++.cmake 
   DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/log++
   RENAME log++Config.cmake)
 

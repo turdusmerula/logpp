@@ -44,13 +44,14 @@ if(LIBLOGPP_INCLUDE_DIR AND EXISTS "${LIBLOGPP_INCLUDE_DIR}/log++/version.h")
     unset(LIBLOGPP_HEADER_CONTENTS)
 endif()
 
-include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
+include(${CMAKE_ROOT}/Modules/FindPackageHandleStandardArgs.cmake)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(LibLOGPP  REQUIRED_VARS  LIBLOGPP_INCLUDE_DIR
                                                            LIBLOGPP_LIBRARY
                                             VERSION_VAR    LIBLOGPP_VERSION_STRING
                                  )
 
 if (LIBLOGPP_FOUND)
+    message("-- Found the log++ library")
     
     find_package(Boost 1.49 COMPONENTS filesystem regex system thread REQUIRED)
 
