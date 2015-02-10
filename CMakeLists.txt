@@ -10,7 +10,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 
-find_package(Boost 1.49 COMPONENTS filesystem regex system REQUIRED)
+find_package(Boost 1.49 COMPONENTS filesystem regex system thread REQUIRED)
 
 include_directories(
 	${Boost_INCLUDE_DIR}
